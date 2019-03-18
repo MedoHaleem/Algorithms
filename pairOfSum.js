@@ -1,13 +1,13 @@
 //  pair of numbers that has sum of value of given number
-function hasPairWithSum (arr, sum) {
-    const mySet = new Set()
+function hasPairWithSum(arr, sum) {
+    const mySet = new Set();
     for (let num of arr) {
         if (mySet.has(num)) {
-            return true
+            return true;
         }
-        mySet.add((sum - num))
+        mySet.add((sum - num));
     }
-    return false
+    return false;
 }
 
-console.log(hasPairWithSum([6, 4, 3, 2, 1, 7], 9))
+console.log(hasPairWithSum([6, 4, 3, 2, 1, 7], 9));
