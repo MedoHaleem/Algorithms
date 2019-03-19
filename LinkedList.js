@@ -72,6 +72,21 @@ class LinkedList {
 
     }
 
+    reverse() {
+        let first = this.head;
+        this.tail = this.head;
+        let second = first.next;
+        while (second) {
+            const thirdTemp = second.next;
+            second.next = first;
+            first = second;
+            second = thirdTemp;
+        }
+        this.head.next = null;
+        this.head = first;
+        return this;
+    }
+
     printList() {
         const array = [];
         let currentNode = this.head;
@@ -89,9 +104,6 @@ myLinkedList.append(20);
 myLinkedList.prepend(1);
 myLinkedList.prepend(5);
 myLinkedList.insert(2, 99);
-
 console.log(myLinkedList.printList());
-myLinkedList.delete(1);
-myLinkedList.delete(2);
+console.log(myLinkedList.reverse());
 console.log(myLinkedList.printList());
-console.log(myLinkedList.head.prev);
