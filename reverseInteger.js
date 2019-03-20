@@ -20,7 +20,7 @@ function reverse(x) {
     for (let i = array.length - 1; i >= 0; i--) {
         reverse += array[i];
     }
-    console.log(NumberInt(reverse));
+    console.log(parseInt(reverse));
 }
 
 reverse(-123);
