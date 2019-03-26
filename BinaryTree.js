@@ -35,21 +35,21 @@ class BinarySearchTree {
         }
     }
 
-    lookup(value){
+    lookup(value) {
         if (!this.root) {
             return false;
         }
         let currentNode = this.root;
-        while(currentNode){
-            if(value < currentNode.value){
+        while (currentNode) {
+            if (value < currentNode.value) {
                 currentNode = currentNode.left;
-            } else if(value > currentNode.value){
+            } else if (value > currentNode.value) {
                 currentNode = currentNode.right;
             } else if (currentNode.value === value) {
                 return currentNode;
             }
         }
-        return null
+        return null;
     }
 
     remove(value) {
@@ -69,56 +69,74 @@ class BinarySearchTree {
                     currentNode = currentNode.right;
                 } else if (value === currentNode.value) {
                     // No right Child
-                   if (!currentNode.right) {
-                     if (!parentNode) {
-                       this.root = currentNode.left
-                     } else {
-                         if (currentNode.value < parentNode.value) {
-                             return parentNode.left = currentNode.left
-                         } else if(currentNode.value > parentNode.value) {
-                             return  parentNode.right = currentNode.left;
-                         }
-                     }
-                   }
-                   // Right child doesn't have a left child
-                   else if(!currentNode.right.left) {
-                       currentNode.right.left = currentNode.left;
-                       if(parentNode === null) {
-                           this.root = currentNode.right;
-                       } else {
-                           if(currentNode.value < parentNode.value) {
-                               return parentNode.left = currentNode.right;
-                           } else if (currentNode.value > parentNode.value) {
-                               return  parentNode.right = currentNode.right;
-                           }
-                       }
-                   } else {
-                       //find the Right child's left most child
-                       let leftmost = currentNode.right.left;
-                       let leftmostParent = currentNode.right;
-                       while(leftmost.left !== null) {
-                           leftmostParent = leftmost;
-                           leftmost = leftmost.left;
-                       }
-                       //Parent's left subtree is now leftmost's right subtree
-                       leftmostParent.left = leftmost.right;
-                       leftmost.left = currentNode.left;
-                       leftmost.right = currentNode.right;
+                    if (!currentNode.right) {
+                        if (!parentNode) {
+                            this.root = currentNode.left;
+                        } else {
+                            if (currentNode.value < parentNode.value) {
+                                return parentNode.left = currentNode.left;
+                            } else if (currentNode.value > parentNode.value) {
+                                return parentNode.right = currentNode.left;
+                            }
+                        }
+                    }
+                    // Right child doesn't have a left child
+                    else if (!currentNode.right.left) {
+                        currentNode.right.left = currentNode.left;
+                        if (parentNode === null) {
+                            this.root = currentNode.right;
+                        } else {
+                            if (currentNode.value < parentNode.value) {
+                                return parentNode.left = currentNode.right;
+                            } else if (currentNode.value > parentNode.value) {
+                                return parentNode.right = currentNode.right;
+                            }
+                        }
+                    } else {
+                        //find the Right child's left most child
+                        let leftmost = currentNode.right.left;
+                        let leftmostParent = currentNode.right;
+                        while (leftmost.left !== null) {
+                            leftmostParent = leftmost;
+                            leftmost = leftmost.left;
+                        }
+                        //Parent's left subtree is now leftmost's right subtree
+                        leftmostParent.left = leftmost.right;
+                        leftmost.left = currentNode.left;
+                        leftmost.right = currentNode.right;
 
-                       if(parentNode === null) {
-                           this.root = leftmost;
-                       } else {
-                           if(currentNode.value < parentNode.value) {
-                               parentNode.left = leftmost;
-                           } else if(currentNode.value > parentNode.value) {
-                               parentNode.right = leftmost;
-                           }
-                       }
-                   }
-                   return true
+                        if (parentNode === null) {
+                            this.root = leftmost;
+                        } else {
+                            if (currentNode.value < parentNode.value) {
+                                parentNode.left = leftmost;
+                            } else if (currentNode.value > parentNode.value) {
+                                parentNode.right = leftmost;
+                            }
+                        }
+                    }
+                    return true;
                 }
             }
         }
+    }
+
+    breadthFirstSearch() {
+        let currentNode = this.root;
+        let list = [];
+        let queue = [];
+        queue.push(currentNode);
+        while (queue.length > 0) {
+            currentNode = queue.shift();
+            list.push(currentNode.value);
+            if (currentNode.left) {
+                queue.push(currentNode.left);
+            }
+            if (currentNode.right) {
+                queue.push(currentNode.right);
+            }
+        }
+        return list;
     }
 }
 
@@ -132,9 +150,10 @@ tree.insert(15);
 tree.insert(1);
 console.log(JSON.stringify(traverse(tree.root)));
 console.log(tree.lookup(4));
-tree.remove(4);
+// tree.remove(4);
 console.log(JSON.stringify(traverse(tree.root)));
 console.log(tree.lookup(4));
+console.log(tree.breadthFirstSearch());
 
 //     9
 //  4     20
